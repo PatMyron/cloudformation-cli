@@ -304,7 +304,7 @@
         "taggable": {
             "$comment": "A boolean flag indicating whether this resource type supports updatable tagging.",
             "type": "boolean",
-            "default": true
+            "description": "Default to true if there's an UpdateHandler, and false if no UpdateHandler is provided."
         },
         "replacementStrategy": {
             "$comment": "The order of replacement for an immutable resource update.",
@@ -387,6 +387,10 @@
             "description": "A list of JSON pointers to properties (typically sensitive) that are able to be specified by the customer but unable to be returned in a Read request",
             "$ref": "#/definitions/jsonPointerArray"
         },
+        "conditionalCreateOnlyProperties": {
+            "description": "A list of JSON pointers for properties that can only be updated under certain conditions. For example, you can upgrade the engine version of an RDS DBInstance but you cannot downgrade it.  When updating this property for a resource in a CloudFormation stack, the resource will be replaced if it cannot be updated.",
+            "$ref": "#/definitions/jsonPointerArray"
+        },
         "createOnlyProperties": {
             "description": "A list of JSON pointers to properties that are only able to be specified by the customer when creating a resource. Conversely, any property *not* in this list can be applied to an Update request.",
             "$ref": "#/definitions/jsonPointerArray"
@@ -424,6 +428,7 @@
             "$ref": "#/definitions/resourceLink"
         },
         "propertyTransform": {
+            "description": "A map which allows resource owners to define a function for a property with possible transformation. This property helps ensure the input to the model is equal to output",
             "type": "object",
             "patternProperties": {
                 "^[A-Za-z0-9]{1,64}$": {
